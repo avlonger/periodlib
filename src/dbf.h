@@ -12,7 +12,6 @@ public:
     // using Karp-Miller-Rosenberg algorithm
     // it requires O(n log n) time and space
     DBF(const std::string & text);
-    ~DBF();
 
     // Returns the first occurrence of
     // basic factor having given id and length k
