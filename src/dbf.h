@@ -29,8 +29,6 @@ public:
     int id(int i, int k);
 
 private:
-
-
     // ids of basic factors
     std::vector< std::vector<int> > ids;
 

@@ -4,6 +4,7 @@
 #include <map>
 #include <numeric>
 #include <string>
+#include <algorithm>
 
 #include "etc.h"
 
@@ -103,12 +104,24 @@ DBF::DBF(const string & text) {
 
 
 int DBF::succ(int i, int k, int id){
-    return 0;
+    int log2 = highest_bit(k);
+    vector<int>::iterator result = std::lower_bound(
+        pos[log2][id].begin(), pos[log2][id].end(), i + 1
+    );
+    if (result == pos[log2][id].end())
+        return -1;
+    return *result;
 }
 
 
 int DBF::pred(int i, int k, int id) {
-    return 0;
+    int log2 = highest_bit(k);
+    vector<int>::iterator result = std::upper_bound(
+        pos[log2][id].begin(), pos[log2][id].end(), i + 1
+    );
+    if (result == pos[log2][id].end())
+        return -1;
+    return *result;
 }
 
 int DBF::id(int i, int k) {
