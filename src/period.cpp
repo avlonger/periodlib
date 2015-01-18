@@ -118,13 +118,12 @@ int max_borderless_length_naive(const char * text, int n) {
     int max_len = 1;
     for (int i = 0; i < n; ++i) {
         border(text + i, border_buffer + i, n - i);
-        for (int j = n - 1; j > i && j - i + 1 > max_len; --j) {
-            if (border_buffer[j] == 0) {
-                max_len = j - i + 1;
+        for (int j = n; j > i && j - i > max_len; --j) {
+            if (border_buffer[j - 1] == 0) {
+                max_len = j - i;
             }
         }
     }
     free(border_buffer);
     return max_len;
 }
-
