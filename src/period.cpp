@@ -97,7 +97,6 @@ int max_borderless_length_dbf(const char * text, int n) {
     if (n < 0) {
         n = (int) strlen(text);
     }
-    DBF dbf(text, n);
 
     // at first check if word itself is borderless
     int * border_buffer = (int *) calloc(n, sizeof(int));
@@ -105,6 +104,8 @@ int max_borderless_length_dbf(const char * text, int n) {
     if (border_buffer[n - 1] == 0) {
         return n;
     }
+
+    DBF dbf(text, n);
 
     for (int i = n - border_buffer[n - 1]; i >= 2; --i) {
         for (int j = 0; j < n - i + 1; ++j) {
