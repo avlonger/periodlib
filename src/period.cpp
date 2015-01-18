@@ -47,7 +47,7 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
         int second_in_left = dbf.succ(first_in_left + 1, half, right_half_id);
 
         // last occurrence of right half in left factor
-        int last_in_left = -1;
+        int last_in_left = first_in_left;
         if (second_in_left < 0 || second_in_left > start + half) {
             second_in_left = -1;
         } else {
@@ -58,7 +58,7 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
         int second_in_right = dbf.succ(first_in_right + 1, half, left_half_id);
 
         // last occurrence of left half in right factor
-        int last_in_right = -1;
+        int last_in_right = first_in_right;
         if (second_in_right < 0 || second_in_right > end - half) {
             second_in_right = -1;
         } else {
@@ -69,9 +69,9 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
         int diff1 = second_in_left - first_in_left;
         int last1 = half + last_in_left - start;
 
-        int first2 = end - first_in_right;
+        int first2 = end - last_in_right;
         int diff2 = second_in_right - first_in_right;
-        int last2 = end - last_in_right;
+        int last2 = end - first_in_right;
 
         // check different cases
         if (second_in_left == -1 && second_in_right == -1) {
