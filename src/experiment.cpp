@@ -39,7 +39,6 @@ void usage(const char * program_name) {
 
 
 uint64_t do_for_all_words(int position) {
-    max_borderless_length("ABA");
     uint64_t total = 0;
     int value = 0;
     for (char i = MINIMAL_CHAR; i < ALPHABET; ++i) {
