@@ -5,14 +5,15 @@
 #include "dbf.h"
 
 
+// check if x is element of arithmetic progression
+bool is_element(int x, int first, int diff, int last) {
+    if (x < first || x > last)
+        return false;
+    return x == first + ((x - first) / diff) * diff;
+}
+
 bool is_borderless(const std::string & text, DBF & dbf, int start, int end) {
 
-    // check if x is element of arithmetic progression
-    bool is_element(int x, int first, int diff, int last) {
-        if (x < first || x > last)
-            return false;
-        return x == first + ((x - first) / diff) * diff;
-    }
 
     // This implementation uses LargePS queries only
     // and does not find actual period length
