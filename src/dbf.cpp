@@ -1,5 +1,7 @@
 #include "dbf.h"
 
+#include <string.h>
+
 #include <set>
 #include <map>
 #include <numeric>
@@ -12,12 +14,12 @@
 using namespace std;
 
 
-DBF::DBF(const string & text) {
+DBF::DBF(const char * text) {
 
-    unsigned long n = text.length();
+    unsigned long n = strlen(text);
 
     // find all distinct letters
-    set<char> chars(text.begin(), text.end());
+    set<char> chars(text, text + n);
 
     // build translation dictionary: letter => 1-length factor id
     map<char, int> dict;

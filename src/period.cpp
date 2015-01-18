@@ -1,6 +1,6 @@
 #include "period.h"
 
-#include <string>
+#include <string.h>
 
 #include "dbf.h"
 
@@ -12,15 +12,14 @@ bool is_element(int x, int first, int diff, int last) {
     return x == first + ((x - first) / diff) * diff;
 }
 
-bool is_borderless(const std::string & text, DBF & dbf, int start, int end) {
-
+bool is_borderless(const char * text, DBF & dbf, int start, int end) {
 
     // This implementation uses LargePS queries only
     // and does not find actual period length
     int n = end - start;
 
     // check 1-length basic factors
-    if (text[0] == text[text.length() - 1]) {
+    if (text[start] == text[end - 1]) {
         return false;
     }
 
@@ -90,4 +89,19 @@ bool is_borderless(const std::string & text, DBF & dbf, int start, int end) {
     }
 
     return true;
+}
+
+int max_borderless_length(const char * text) {
+    DBF dbf(text);
+    int n = (int) strlen(text);
+
+    for (int i = n; i >= 2; --i) {
+        for (int j = 0; j < n - i + 1; ++j) {
+            if (is_borderless(text, dbf, j, j + i)) {
+                return i;
+            }
+        }
+    }
+
+    return 1;
 }

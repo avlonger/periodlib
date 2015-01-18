@@ -11,7 +11,7 @@ public:
     // Creates a new DBF data structure for given text
     // using Karp-Miller-Rosenberg algorithm
     // it requires O(n log n) time and space
-    DBF(const std::string & text);
+    DBF(const char * text);
 
     // Returns the first occurrence of
     // basic factor having given id and length k
