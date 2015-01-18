@@ -1,7 +1,9 @@
 #include "period.h"
 
+#include <stdlib.h>
 #include <string.h>
 
+#include "kmp.h"
 #include "dbf.h"
 
 
@@ -91,9 +93,11 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
     return true;
 }
 
-int max_borderless_length(const char * text) {
-    DBF dbf(text);
-    int n = (int) strlen(text);
+int max_borderless_length_dbf(const char * text, int n) {
+    if (n < 0) {
+        n = (int) strlen(text);
+    }
+    DBF dbf(text, n);
 
     for (int i = n; i >= 2; --i) {
         for (int j = 0; j < n - i + 1; ++j) {
@@ -105,3 +109,22 @@ int max_borderless_length(const char * text) {
 
     return 1;
 }
+
+int max_borderless_length_naive(const char * text, int n) {
+    if (n < 0) {
+        n = (int) strlen(text);
+    }
+    int * border_buffer = (int *) calloc(n, sizeof(int));
+    int max_len = 1;
+    for (int i = 0; i < n; ++i) {
+        border(text + i, border_buffer + i, n - i);
+        for (int j = n - 1; j > i && j - i + 1 > max_len; --j) {
+            if (border_buffer[j] == 0) {
+                max_len = j - i + 1;
+            }
+        }
+    }
+    free(border_buffer);
+    return max_len;
+}
+

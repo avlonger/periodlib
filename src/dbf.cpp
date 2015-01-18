@@ -14,9 +14,11 @@
 using namespace std;
 
 
-DBF::DBF(const char * text) {
+DBF::DBF(const char * text, int n) {
 
-    unsigned long n = strlen(text);
+    if (n == -1) {
+        n = (int) strlen(text);
+    }
 
     // find all distinct letters
     set<char> chars(text, text + n);

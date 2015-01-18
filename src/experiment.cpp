@@ -25,7 +25,9 @@ void usage(const char * program_name) {
     printf("Usage: %s [options] ALGORITHM\n", program_name);
     printf("Calculate some value for words range\n");
     printf("Algorithms:\n");
-    printf("MAXBORDERLESS           find longest borderless subword\n");
+    printf("MAXBORDERLESS_DBF           find longest borderless subword\n");
+    printf("                            using dictionary of basic factors\n");
+    printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
     printf("\n");
     printf("Options:\n");
     printf(" -l  Find average value for all words of given length\n");
@@ -61,8 +63,13 @@ uint64_t do_for_all_words(int position) {
 }
 
 
-int longest_borderless() {
-    return max_borderless_length(CHAR_BUFFER);
+int longest_borderless_dbf() {
+    return max_borderless_length_dbf(CHAR_BUFFER, LENGTH);
+}
+
+
+int longest_borderless_naive() {
+    return max_borderless_length_naive(CHAR_BUFFER, LENGTH);
 }
 
 
@@ -110,8 +117,10 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    if (strcmp(argv[optind], "MAXBORDERLESS") == 0) {
-        FUNCTION = longest_borderless;
+    if (strcmp(argv[optind], "MAXBORDERLESS_DBF") == 0) {
+        FUNCTION = longest_borderless_dbf;
+    } else if (strcmp(argv[optind], "MAXBORDERLESS_NAIVE") == 0) {
+        FUNCTION = longest_borderless_naive;
     } else {
         usage(argv[0]);
         return -1;
