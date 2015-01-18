@@ -133,6 +133,10 @@ int max_borderless_length_naive(const char * text, int n) {
             return (n - i > max_len) ? n - i : max_len;
         }
 
+        if (n - i <= max_len) {
+            return max_len;
+        }
+
         int j = n - i - border_buffer[n - i - 1];
 
         while (j > max_len) {
