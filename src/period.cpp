@@ -62,7 +62,7 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
         if (second_in_right < 0 || second_in_right > end - half) {
             second_in_right = -1;
         } else {
-            last_in_right = dbf.pred(end - half, half, left_half_id);
+            last_in_right = dbf.pred(end - k, half, left_half_id);
         }
 
         int first1 = half + first_in_left - start;
