@@ -17,8 +17,8 @@ int LENGTH = 2;
 bool TRACE = false;
 bool NORMALIZE = false;
 bool PRINT_TOTAL = false;
-char PREFIX = 0;
-char PREFIX_LENGTH = 0;
+int PREFIX = 0;
+int PREFIX_LENGTH = 0;
 
 
 void usage(const char * program_name) {
@@ -37,6 +37,8 @@ void usage(const char * program_name) {
     printf(" -c  Print count of processed words\n");
     printf(" -f  Fixed prefix length\n");
     printf(" -p  Prefix decimal representation\n");
+    printf(" -r  Read from file (\\n separated words)");
+    printf(" -m  Measure time");
 }
 
 
@@ -95,10 +97,10 @@ int main(int argc, char** argv) {
                 PRINT_TOTAL = true;
                 break;
             case 'p':
-                PREFIX = (char) atoi(optarg);
+                PREFIX = atoi(optarg);
                 break;
             case 'f':
-                PREFIX_LENGTH = (char) atoi(optarg);
+                PREFIX_LENGTH = atoi(optarg);
                 break;
             case '?':
             case ':':
@@ -132,7 +134,7 @@ int main(int argc, char** argv) {
 
     int filled_chars = 0;
     while (PREFIX > 0) {
-        temp_buffer[filled_chars++] = PREFIX % ALPHABET;
+        temp_buffer[filled_chars++] = (char) PREFIX % ALPHABET;
         PREFIX /= ALPHABET;
     }
 

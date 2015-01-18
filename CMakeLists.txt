@@ -3,5 +3,7 @@ project(periodlib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES src/experiment.cpp src/dbf.cpp src/etc.cpp src/period.cpp src/kmp.cpp)
-add_executable(periodlib ${SOURCE_FILES})
+set(EXPERIMENT src/experiment.cpp src/dbf.cpp src/etc.cpp src/period.cpp src/kmp.cpp)
+set(MEASURE src/measure.cpp src/dbf.cpp src/etc.cpp src/period.cpp src/kmp.cpp)
+add_executable(experiment ${EXPERIMENT})
+add_executable(measure ${MEASURE})
