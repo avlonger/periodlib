@@ -17,7 +17,7 @@ bool is_borderless(const std::string & text, DBF & dbf, int start, int end) {
 
     // This implementation uses LargePS queries only
     // and does not find actual period length
-    int n = end - start + 1;
+    int n = end - start;
 
     // check 1-length basic factors
     if (text[0] == text[text.length() - 1]) {
@@ -88,4 +88,6 @@ bool is_borderless(const std::string & text, DBF & dbf, int start, int end) {
                 return false;
         }
     }
+
+    return true;
 }
