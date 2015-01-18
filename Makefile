@@ -11,7 +11,7 @@ dirs:
 	mkdir -p $(BIN_PATH)
 
 experiment:
-	$(CC) $(CFLAGS) $(ALGORITHMS) src/experiment.cpp $(LDFLAGS) -o $(BIN_PATH)/measure
+	$(CC) $(CFLAGS) $(ALGORITHMS) src/experiment.cpp $(LDFLAGS) -o $(BIN_PATH)/experiment
 
 measure:
 	$(CC) $(CFLAGS) $(ALGORITHMS) src/measure.cpp $(LDFLAGS) -o $(BIN_PATH)/measure
