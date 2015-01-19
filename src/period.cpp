@@ -148,7 +148,7 @@ int max_borderless_length_naive(const char * text, int n) {
 
     int max_len = 1;
 
-    for (int i = 0; i < n && n - i > max_len; ++i) {
+    for (int i = 0; i < n - 1; ++i) {
 
         border(text + i, border_buffer, n - i);
 
