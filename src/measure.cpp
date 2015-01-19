@@ -21,6 +21,7 @@ void usage(const char * program_name) {
     printf("MAXBORDERLESS_DBF           find longest borderless subword\n");
     printf("                            using dictionary of basic factors\n");
     printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
+    printf("MAXBORDERLESS_SUPER_NAIVE   find longest borderless subword naively\n");
     printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
     printf("                            using border-related heuristics\n");
     printf("\n");
@@ -44,7 +45,7 @@ void measure(std::map<std::string, algorithm> algorithms, char alphabet, char mi
     char * strings = (char *) calloc(length * words_count, sizeof(char));
     fill_rand_chars(strings, length * words_count, alphabet, minimal_char);
 
-    std::cout.precision(3);
+    std::cout.precision(8);
 
     for (std::map<std::string, algorithm>::iterator it = algorithms.begin(); it != algorithms.end(); ++it) {
         clock_t begin = clock();
@@ -107,6 +108,8 @@ int main(int argc, char** argv) {
             algorithms[std::string(argv[i])] = max_borderless_length_dbf;
         } else if (strcmp(argv[i], "MAXBORDERLESS_NAIVE") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_naive;
+        } else if (strcmp(argv[i], "MAXBORDERLESS_SUPER_NAIVE") == 0) {
+            algorithms[std::string(argv[i])] = max_borderless_length_super_naive;
         } else if (strcmp(argv[i], "MAXBORDERLESS_BORDER") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_border;
         } else {
