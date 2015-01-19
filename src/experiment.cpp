@@ -13,7 +13,10 @@ int * INT_BUFFER;
 int (* FUNCTION)();
 char ALPHABET = 2;
 char MINIMAL_CHAR = 1;
-int LENGTH = 2;
+int START = 2;
+int STEP = 1;
+int FINISH = 10;
+int LENGTH;
 bool TRACE = false;
 bool NORMALIZE = false;
 bool PRINT_TOTAL = false;
@@ -30,7 +33,9 @@ void usage(const char * program_name) {
     printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
     printf("\n");
     printf("Options:\n");
-    printf(" -l  Find average value for all words of given length\n");
+    printf(" -b  Find average value for all words of given minimal length\n");
+    printf(" -e  Find average value for all words of given maximal length\n");
+    printf(" -s  Length step\n");
     printf(" -a  Alphabet size (default: 2)\n");
     printf(" -t  Trace: print results for all generated words\n");
     printf(" -n  Normalize (divide result by total words count)\n");
@@ -38,7 +43,6 @@ void usage(const char * program_name) {
     printf(" -f  Fixed prefix length\n");
     printf(" -p  Prefix decimal representation\n");
     printf(" -r  Read from file (\\n separated words)");
-    printf(" -m  Measure time");
 }
 
 
@@ -81,14 +85,20 @@ int longest_borderless_border() {
 int main(int argc, char** argv) {
     int c = 0;
     opterr = 1;
-    while ((c = getopt(argc, argv, "tncl:a:p:f:")) != -1)
+    while ((c = getopt(argc, argv, "tnce:b:s:a:p:f:")) != -1)
         switch (c)
         {
             case 'a':
                 ALPHABET = (char) atoi(optarg);
                 break;
-            case 'l':
-                LENGTH = atoi(optarg);
+            case 'e':
+                FINISH = atoi(optarg);
+                break;
+            case 'b':
+                START = atoi(optarg);
+                break;
+            case 's':
+                STEP = atoi(optarg);
                 break;
             case 't':
                 TRACE = true;
@@ -133,8 +143,8 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    CHAR_BUFFER = (char *) calloc((size_t) LENGTH + 1, sizeof(char));
-    INT_BUFFER = (int *) calloc((size_t) LENGTH + 1, sizeof(int));
+    CHAR_BUFFER = (char *) calloc((size_t) FINISH + 1, sizeof(char));
+    INT_BUFFER = (int *) calloc((size_t) FINISH + 1, sizeof(int));
     char * temp_buffer = (char *) calloc((size_t) PREFIX_LENGTH + 1, sizeof(char));
 
     int filled_chars = 0;
@@ -149,17 +159,21 @@ int main(int argc, char** argv) {
 
     ALPHABET += MINIMAL_CHAR;
 
-    uint64_t answer = do_for_all_words(PREFIX_LENGTH);
+    for (LENGTH = START; LENGTH < FINISH; LENGTH += STEP) {
 
-    double count = pow((double) (ALPHABET - MINIMAL_CHAR), (double) LENGTH);
-    if (NORMALIZE) {
-        printf("%.10f\n", (double) answer / count);
-    } else {
-        printf("%llu\n", answer);
-    }
+        uint64_t answer = do_for_all_words(PREFIX_LENGTH);
 
-    if (PRINT_TOTAL) {
-        printf("%d\n", (int)count);
+        double count = pow((double) (ALPHABET - MINIMAL_CHAR), (double) LENGTH);
+        if (NORMALIZE) {
+            printf("%d %.10f\n", LENGTH, (double) answer / count);
+        } else {
+            printf("%d %llu\n", LENGTH, answer);
+        }
+
+        if (PRINT_TOTAL) {
+            printf("%d\n", (int) count);
+        }
+        fflush(stdout);
     }
 
     free(CHAR_BUFFER);
