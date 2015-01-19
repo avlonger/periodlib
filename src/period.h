@@ -13,12 +13,16 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end);
 // using Dictionary of Basic Factors data structure
 int max_borderless_length_dbf(const char * text, int n = -1);
 
-// Returns longest borderless subword using naive
-// algorithm: test each subword of given word
-int max_borderless_length_naive(const char * text, int n = -1);
-
 // Returns longest borderless subword using border array based
 // algorithm
 int max_borderless_length_border(const char * text, int n = -1);
+
+// Returns longest borderless subword using naive
+// algorithm: test each subword of given word with stop
+int max_borderless_length_naive(const char * text, int n = -1);
+
+// Returns longest borderless subword using naive
+// algorithm: test each subword of given word
+int max_borderless_length_super_naive(const char * text, int n = -1);
 
 #endif  // PERIOD_UTILITES_H_
