@@ -107,10 +107,11 @@ int max_borderless_length_dbf(const char * text, int n) {
 
     DBF dbf(text, n);
 
-    for (int i = n - border_buffer[n - 1]; i >= 2; --i) {
-        for (int j = 0; j < n - i + 1; ++j) {
-            if (is_borderless(text, dbf, j, j + i)) {
-                return i;
+    for (int i = border_buffer[n - 1]; i < n - 1; ++i) {
+        for (int j = 0; j < i + 1; ++j) {
+            if (is_borderless(text, dbf, j, j + n - i)) {
+                free(border_buffer);
+                return n - i;
             }
         }
     }
