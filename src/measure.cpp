@@ -26,7 +26,9 @@ void usage(const char * program_name) {
     printf("                            using border-related heuristics\n");
     printf("\n");
     printf("Options:\n");
-    printf(" -l  Measure time for random words of given length\n");
+    printf(" -b  Measure time for random words of minimal length\n");
+    printf(" -e  Measure time for random words of maximal length\n");
+    printf(" -s  Word length step\n");
     printf(" -a  Alphabet size (default: 2)\n");
     printf(" -r  Random words count\n");
     printf(" -t  Trace: print results for all generated words\n");
@@ -58,7 +60,7 @@ void measure(std::map<std::string, algorithm> algorithms, char alphabet, char mi
             }
         }
 
-        std::cout << it->first << ":  " << std::fixed << double(clock() - begin) / CLOCKS_PER_SEC / words_count << std::endl;
+        std::cout << it->first << ' ' << length << ' ' << std::fixed << double(clock() - begin) / CLOCKS_PER_SEC / words_count << std::endl;
     }
 
     free(strings);
@@ -69,18 +71,26 @@ int main(int argc, char** argv) {
     int c = 0;
     opterr = 1;
     char alphabet = 2;
-    int length = 2;
+    int start = 2;
+    int finish = 10;
+    int step = 1;
     bool trace = false;
     int words_count = 1;
     char minimal_char = 1;
-    while ((c = getopt(argc, argv, "tl:a:r:")) != -1)
+    while ((c = getopt(argc, argv, "tb:e:s:a:r:")) != -1)
         switch (c)
         {
             case 'a':
                 alphabet = (char) atoi(optarg);
                 break;
-            case 'l':
-                length = atoi(optarg);
+            case 'b':
+                start = atoi(optarg);
+                break;
+            case 'e':
+                finish = atoi(optarg);
+                break;
+            case 's':
+                step = atoi(optarg);
                 break;
             case 't':
                 trace = true;
@@ -122,8 +132,9 @@ int main(int argc, char** argv) {
         usage(argv[0]);
         return -1;
     }
-
-    measure(algorithms, alphabet, minimal_char, length, words_count, trace);
+    for (int length = start; length < finish + 1; length += step) {
+        measure(algorithms, alphabet, minimal_char, length, words_count, trace);
+    }
 
     return 0;
 }
