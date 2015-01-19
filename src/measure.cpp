@@ -21,6 +21,8 @@ void usage(const char * program_name) {
     printf("MAXBORDERLESS_DBF           find longest borderless subword\n");
     printf("                            using dictionary of basic factors\n");
     printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
+    printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
+    printf("                            using border-related heuristics\n");
     printf("\n");
     printf("Options:\n");
     printf(" -l  Measure time for random words of given length\n");
@@ -105,6 +107,8 @@ int main(int argc, char** argv) {
             algorithms[std::string(argv[i])] = max_borderless_length_dbf;
         } else if (strcmp(argv[i], "MAXBORDERLESS_NAIVE") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_naive;
+        } else if (strcmp(argv[i], "MAXBORDERLESS_BORDER") == 0) {
+            algorithms[std::string(argv[i])] = max_borderless_length_border;
         } else {
             usage(argv[0]);
             return -1;

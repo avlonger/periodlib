@@ -118,7 +118,7 @@ int max_borderless_length_dbf(const char * text, int n) {
     return 1;
 }
 
-int max_borderless_length_naive(const char * text, int n) {
+int max_borderless_length_border(const char * text, int n) {
     if (n < 0) {
         n = (int) strlen(text);
     }
@@ -131,6 +131,28 @@ int max_borderless_length_naive(const char * text, int n) {
         border(text + i, border_buffer, n - i);
 
         for (int j = n - i - border_buffer[n - i - 1]; j > max_len; j -= border_buffer[j - 1])
+            if (border_buffer[j - 1] == 0)
+                max_len = j;
+
+    }
+    free(border_buffer);
+    return max_len;
+}
+
+
+int max_borderless_length_naive(const char * text, int n) {
+    if (n < 0) {
+        n = (int) strlen(text);
+    }
+    int * border_buffer = (int *) calloc(n, sizeof(int));
+
+    int max_len = 1;
+
+    for (int i = 0; i < n && n - i > max_len; ++i) {
+
+        border(text + i, border_buffer, n - i);
+
+        for (int j = n - i; j > max_len; --j)
             if (border_buffer[j - 1] == 0)
                 max_len = j;
 

@@ -17,4 +17,8 @@ int max_borderless_length_dbf(const char * text, int n = -1);
 // algorithm: test each subword of given word
 int max_borderless_length_naive(const char * text, int n = -1);
 
+// Returns longest borderless subword using border array based
+// algorithm
+int max_borderless_length_border(const char * text, int n = -1);
+
 #endif  // PERIOD_UTILITES_H_

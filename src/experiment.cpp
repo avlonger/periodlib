@@ -74,6 +74,9 @@ int longest_borderless_naive() {
     return max_borderless_length_naive(CHAR_BUFFER, LENGTH);
 }
 
+int longest_borderless_border() {
+    return max_borderless_length_border(CHAR_BUFFER, LENGTH);
+}
 
 int main(int argc, char** argv) {
     int c = 0;
@@ -123,6 +126,8 @@ int main(int argc, char** argv) {
         FUNCTION = longest_borderless_dbf;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_NAIVE") == 0) {
         FUNCTION = longest_borderless_naive;
+    } else if (strcmp(argv[optind], "MAXBORDERLESS_BORDER") == 0) {
+        FUNCTION = longest_borderless_border;
     } else {
         usage(argv[0]);
         return -1;
