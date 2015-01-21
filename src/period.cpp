@@ -105,6 +105,33 @@ int max_borderless_length_dbf(const char * text, int n) {
         return n;
     }
 
+    DBF dbf(text, n);
+
+    for (int i = border_buffer[n - 1]; i < n - 1; ++i) {
+        for (int j = 0; j < i + 1; ++j) {
+            if (is_borderless(text, dbf, j, j + n - i)) {
+                free(border_buffer);
+                return n - i;
+            }
+        }
+    }
+    free(border_buffer);
+    return 1;
+}
+
+
+int max_borderless_length_dbf_hashtable(const char * text, int n) {
+    if (n < 0) {
+        n = (int) strlen(text);
+    }
+
+    // at first check if word itself is borderless
+    int * border_buffer = (int *) calloc(n, sizeof(int));
+    border(text, border_buffer, n);
+    if (border_buffer[n - 1] == 0) {
+        return n;
+    }
+
     DBFHashTable dbf(text, n);
 
     for (int i = border_buffer[n - 1]; i < n - 1; ++i) {

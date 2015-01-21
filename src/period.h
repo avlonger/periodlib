@@ -13,6 +13,10 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end);
 // using Dictionary of Basic Factors data structure
 int max_borderless_length_dbf(const char * text, int n = -1);
 
+// Returns length of longest borderless subword of given word
+// using Dictionary of Basic Factors + hash table data structure
+int max_borderless_length_dbf_hashtable(const char * text, int n = -1);
+
 // Returns longest borderless subword using border array based
 // algorithm
 int max_borderless_length_border(const char * text, int n = -1);

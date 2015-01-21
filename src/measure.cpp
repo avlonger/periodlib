@@ -20,6 +20,8 @@ void usage(const char * program_name) {
     printf("Algorithms:\n");
     printf("MAXBORDERLESS_DBF           find longest borderless subword\n");
     printf("                            using dictionary of basic factors\n");
+    printf("MAXBORDERLESS_DBF_HASH      find longest borderless subword\n");
+    printf("                            using dictionary of basic factors and hashtable\n");
     printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
     printf("MAXBORDERLESS_SUPER_NAIVE   find longest borderless subword naively\n");
     printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
@@ -116,6 +118,8 @@ int main(int argc, char** argv) {
     for (int i = optind; i < argc; ++i) {
         if (strcmp(argv[i], "MAXBORDERLESS_DBF") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_dbf;
+        } else if (strcmp(argv[i], "MAXBORDERLESS_DBF_HASH") == 0) {
+            algorithms[std::string(argv[i])] = max_borderless_length_dbf_hashtable;
         } else if (strcmp(argv[i], "MAXBORDERLESS_NAIVE") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_naive;
         } else if (strcmp(argv[i], "MAXBORDERLESS_SUPER_NAIVE") == 0) {

@@ -30,7 +30,13 @@ void usage(const char * program_name) {
     printf("Algorithms:\n");
     printf("MAXBORDERLESS_DBF           find longest borderless subword\n");
     printf("                            using dictionary of basic factors\n");
+    printf("MAXBORDERLESS_DBF_HASH      find longest borderless subword\n");
+    printf("                            using dictionary of basic factors and hashtable\n");
     printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
+    printf("MAXBORDERLESS_SUPER_NAIVE   find longest borderless subword naively\n");
+    printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
+    printf("                            using border-related heuristics\n");
+
     printf("\n");
     printf("Options:\n");
     printf(" -b  Find average value for all words of given minimal length\n");
@@ -73,6 +79,9 @@ int longest_borderless_dbf() {
     return max_borderless_length_dbf(CHAR_BUFFER, LENGTH);
 }
 
+int longest_borderless_dbf_hashtable() {
+    return max_borderless_length_dbf_hashtable(CHAR_BUFFER, LENGTH);
+}
 
 int longest_borderless_naive() {
     return max_borderless_length_naive(CHAR_BUFFER, LENGTH);
@@ -134,6 +143,8 @@ int main(int argc, char** argv) {
 
     if (strcmp(argv[optind], "MAXBORDERLESS_DBF") == 0) {
         FUNCTION = longest_borderless_dbf;
+    } else if (strcmp(argv[optind], "MAXBORDERLESS_DBF_HASH") == 0) {
+        FUNCTION = longest_borderless_dbf_hashtable;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_NAIVE") == 0) {
         FUNCTION = longest_borderless_naive;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_BORDER") == 0) {
