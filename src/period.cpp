@@ -32,37 +32,37 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
         int right_half_id = dbf.id(end - half, half);
 
         // first occurrence of right half in left factor
-        int first_in_left = dbf.succ(start, half, right_half_id);
-        if (first_in_left < 0 || first_in_left > start + half)
+        int first_in_left = dbf.succ_short(start, half, right_half_id);
+        if (first_in_left < 0)
             // no occurrences
             continue;
 
         // first occurrence of left half in right factor
-        int first_in_right = dbf.succ(end - k, half, left_half_id);
-        if (first_in_right < 0 || first_in_right > end - half)
+        int first_in_right = dbf.succ_short(end - k, half, left_half_id);
+        if (first_in_right < 0)
             // no occurrences
             continue;
 
         // second occurrence of right half in left factor
-        int second_in_left = dbf.succ(first_in_left + 1, half, right_half_id);
+        int second_in_left = dbf.succ_short(first_in_left + 1, half, right_half_id);
 
         // last occurrence of right half in left factor
         int last_in_left = first_in_left;
-        if (second_in_left < 0 || second_in_left > start + half) {
+        if (second_in_left < 0) {
             second_in_left = -1;
         } else {
-            last_in_left = dbf.pred(start + half, half, right_half_id);
+            last_in_left = dbf.pred_short(start + half, half, right_half_id);
         }
 
         // second occurrence of left half in right factor
-        int second_in_right = dbf.succ(first_in_right + 1, half, left_half_id);
+        int second_in_right = dbf.succ_short(first_in_right + 1, half, left_half_id);
 
         // last occurrence of left half in right factor
         int last_in_right = first_in_right;
-        if (second_in_right < 0 || second_in_right > end - half) {
+        if (second_in_right < 0) {
             second_in_right = -1;
         } else {
-            last_in_right = dbf.pred(end - k, half, left_half_id);
+            last_in_right = dbf.pred_short(end - k, half, left_half_id);
         }
 
         int first1 = half + first_in_left - start;

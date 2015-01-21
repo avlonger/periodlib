@@ -7,6 +7,7 @@
 #include <numeric>
 #include <string>
 #include <algorithm>
+#include <Python/Python.h>
 
 #include "etc.h"
 
@@ -125,6 +126,18 @@ int DBF::succ(int i, int k, int id){
     if (result == pos[log2][id].end())
         return -1;
     return *result;
+}
+
+
+int DBF::succ_short(int i, int k, int id) {
+    int answer = succ(i, k, id);
+    return (answer > i + k) ? -1 : answer;
+}
+
+
+int DBF::pred_short(int i, int k, int id) {
+    int answer = pred(i, k, id);
+    return (answer < i - k) ? -1 : answer;
 }
 
 

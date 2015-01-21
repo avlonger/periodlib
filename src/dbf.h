@@ -30,6 +30,16 @@ public:
     // having length k
     int id(int i, int k);
 
+    // Returns the last occurrence of
+    // basic factor v having given id from range
+    // [i - |v|, i]
+    int pred_short(int i, int k, int id);
+
+    // Returns the last occurrence of
+    // basic factor v having given id from range
+    // [i, i + |v|]
+    int succ_short(int i, int k, int id);
+
 protected:
     // fill positions data structure with
     // freshly-generated basic factor ids
@@ -57,14 +67,14 @@ public:
     DBFHashTable(const char * text, int n = -1);
 
     // Returns the first occurrence of
-    // basic factor having given id and length k
-    // that is not less than i (using hash table)
-    int succ_short(int i, int k, int id);
-
-    // Returns the last occurrence of
-    // basic factor having given id and length k
-    // that is not greater than i (using hash table)
+    // basic factor v having given id from range
+    // [i - |v|, i]
     int pred_short(int i, int k, int id);
+
+    // Returns the first occurrence of
+    // basic factor v having given id from range
+    // [i, i + |v|]
+    int succ_short(int i, int k, int id);
 
 private:
     // fill positions data structure with
