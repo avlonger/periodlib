@@ -176,7 +176,7 @@ DBFHashTable::DBFHashTable(const char * text, int n) {
 
 void DBFHashTable::fill_positions(int k, int ids_count) {
     if (pos.size() < k + 1) {
-        pos.push_back(vector< unordered_map<int, triplet> >((unsigned long)ids_count));
+        pos.push_back(vector< table_type >((unsigned long)ids_count));
     } else {
         pos[k].clear();
     }
@@ -189,8 +189,8 @@ void DBFHashTable::fill_positions(int k, int ids_count) {
     int slice_pos = 0;
     for (int slice = 0; slice < n; slice += size, ++slice_pos) {
         for (int i = slice; i < slice + size && i < n; ++i) {
-            unordered_map<int, triplet> & occ_map = pos[k][ids[k][i]];
-            unordered_map<int, triplet>::iterator it = occ_map.find(slice_pos);
+            table_type & occ_map = pos[k][ids[k][i]];
+            table_type::iterator it = occ_map.find(slice_pos);
             if (it == occ_map.end()) {
                 occ_map[slice_pos] = triplet{i, i, 0};
             } else {
@@ -207,8 +207,8 @@ void DBFHashTable::fill_positions(int k, int ids_count) {
 
 int DBFHashTable::succ_short(int i, int k, int id) {
     int log2 = highest_bit(k);
-    unordered_map<int, triplet> & occ_map = pos[log2][id];
-    unordered_map<int, triplet>::iterator occ = occ_map.find(i / k);
+    table_type & occ_map = pos[log2][id];
+    table_type::iterator occ = occ_map.find(i / k);
     if (occ == occ_map.end() || occ->second[1] < i) {
         occ = occ_map.find(i / k + 1);
         if (occ == occ_map.end() || occ->second[0] > i + k) {
@@ -224,8 +224,8 @@ int DBFHashTable::succ_short(int i, int k, int id) {
 
 int DBFHashTable::pred_short(int i, int k, int id) {
     int log2 = highest_bit(k);
-    unordered_map<int, triplet> & occ_map = pos[log2][id];
-    unordered_map<int, triplet>::iterator occ = occ_map.find(i / k);
+    table_type & occ_map = pos[log2][id];
+    table_type::iterator occ = occ_map.find(i / k);
     if (occ == occ_map.end() || occ->second[0] > i) {
         occ = occ_map.find(i / k - 1);
         if (occ == occ_map.end() || occ->second[1] < i - k) {

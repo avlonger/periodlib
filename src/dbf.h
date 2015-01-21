@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <array>
+#include <map>
 #include <unordered_map>
 
 // Dictionary of Basic Factors
@@ -86,12 +87,15 @@ public:
     virtual int succ_short(int i, int k, int id);
 
 private:
+
+    typedef std::map<int, triplet> table_type;
+
     // fill positions data structure with
     // freshly-generated basic factor ids
     virtual void fill_positions(int k, int ids_count);
 
     // positions of basic factors
-    std::vector< std::vector< std::unordered_map<int, triplet> > > pos;
+    std::vector< std::vector< table_type > > pos;
 
     // remove long SUCC and PREV queries from derived class
     using DBF::succ;
