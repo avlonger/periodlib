@@ -99,10 +99,20 @@ DBF::DBF(const char * text, int n) {
             ids[k + 1][buffer2[i]] = current_id;
         }
         ids_count = current_id + 1;
+
+        fill_positions(k + 1, ids_count);
+    }
+}
+
+void DBF::fill_positions(int k, int ids_count) {
+    if (pos.size() < k + 1) {
         pos.push_back(vector< vector<int> >((unsigned long)ids_count));
-        for (int i = 0; i < n; ++i) {
-            pos[k + 1][ids[k + 1][i]].push_back(i);
-        }
+    } else {
+        pos[k].clear();
+    }
+    int i = 0;
+    for (vector<int>::iterator it = ids[k].begin(); it != ids[k].end(); ++it, ++i) {
+        pos[k][*it].push_back(i);
     }
 }
 
@@ -128,6 +138,50 @@ int DBF::pred(int i, int k, int id) {
     return *result;
 }
 
+
 int DBF::id(int i, int k) {
     return ids[highest_bit(k)][i];
+}
+
+
+DBFHashTable::DBFHashTable(const char * text, int n) : DBF(text, n) {}
+
+
+void DBFHashTable::fill_positions(int k, int ids_count) {
+    if (pos.size() < k + 1) {
+        pos.push_back(vector< unordered_map<int, triplet> >((unsigned long)ids_count));
+    } else {
+        pos[k].clear();
+    }
+
+    int n = (int) ids[k].size();
+
+    // factor size
+    int size = 1 << k;
+
+    int slice_pos = 0;
+    for (int slice = 0; slice < n; slice += size, ++slice_pos) {
+        for (int i = slice; i < slice + size && i < n; ++i) {
+            unordered_map<int, triplet> & occ_map = pos[k][ids[k][i]];
+            unordered_map<int, triplet>::iterator it = occ_map.find(slice_pos);
+            if (it == occ_map.end()) {
+                occ_map[slice_pos] = triplet{i, -1, -1};
+            } else {
+                // save difference of arithmetic progression value
+                if (it->second[2] == -1) {
+                    it->second[2] = i - it->second[0];
+                }
+                it->second[1] = i;
+            }
+        }
+    }
+}
+
+
+int DBFHashTable::succ_short(int i, int k, int id) {
+
+}
+
+int DBFHashTable::pred_short(int i, int k, int id) {
+
 }

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <array>
+#include <unordered_map>
 
 // Dictionary of Basic Factors
 // M.Crochemore "Jewels of Stringology", p.85
@@ -28,12 +30,49 @@ public:
     // having length k
     int id(int i, int k);
 
-private:
+protected:
+    // fill positions data structure with
+    // freshly-generated basic factor ids
+    virtual void fill_positions(int k, int ids_count);
+
     // ids of basic factors
     std::vector< std::vector<int> > ids;
 
     // positions of basic factors
     std::vector< std::vector< std::vector<int> > > pos;
+
+};
+
+// Dictionary of Basic Factors
+// and basic factor occurrences hash table
+class DBFHashTable : public DBF{
+public:
+
+    // type for arithmetic progression:
+    // (first, last, diff)
+    typedef std::array<int, 3> triplet;
+
+    // Creates a new DBF data structure and hash table
+    // for constant-time succ and pred queries
+    DBFHashTable(const char * text, int n = -1);
+
+    // Returns the first occurrence of
+    // basic factor having given id and length k
+    // that is not less than i (using hash table)
+    int succ_short(int i, int k, int id);
+
+    // Returns the last occurrence of
+    // basic factor having given id and length k
+    // that is not greater than i (using hash table)
+    int pred_short(int i, int k, int id);
+
+private:
+    // fill positions data structure with
+    // freshly-generated basic factor ids
+    virtual void fill_positions(int k, int ids_count);
+
+    // positions of basic factors
+    std::vector< std::vector< std::unordered_map<int, triplet> > > pos;
 
 };
 
