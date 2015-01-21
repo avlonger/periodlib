@@ -14,7 +14,15 @@
 using namespace std;
 
 
+DBF::DBF(){}
+
+
 DBF::DBF(const char * text, int n) {
+    __build_dbf(text, n);
+}
+
+
+void DBF::__build_dbf(const char * text, int n) {
 
     if (n == -1) {
         n = (int) strlen(text);
@@ -35,8 +43,9 @@ DBF::DBF(const char * text, int n) {
     pos.push_back(vector< vector<int> >(chars.size()));
     for (int i = 0; i < n; ++i) {
         ids[0][i] = dict[text[i]];
-        pos[0][ids[0][i]].push_back(i);
     }
+
+    fill_positions(0, (int) chars.size());
 
     // sort-rename log n times
     int k, power, ids_count = (int)dict.size(), id, id2;
@@ -156,7 +165,11 @@ int DBF::id(int i, int k) {
 }
 
 
-DBFHashTable::DBFHashTable(const char * text, int n) : DBF(text, n) {}
+DBFHashTable::DBFHashTable(){}
+
+DBFHashTable::DBFHashTable(const char * text, int n) {
+    __build_dbf(text, n);
+}
 
 
 void DBFHashTable::fill_positions(int k, int ids_count) {
@@ -191,9 +204,28 @@ void DBFHashTable::fill_positions(int k, int ids_count) {
 
 
 int DBFHashTable::succ_short(int i, int k, int id) {
-
+    int log2 = highest_bit(k);
+    unordered_map<int, triplet> & occ_map = pos[log2][id];
+    unordered_map<int, triplet>::iterator occ = occ_map.find(i / k);
+    if (occ == occ_map.end() || occ->second[1] < i) {
+        occ = occ_map.find(i / k + 1);
+        if (occ == occ_map.end()) {
+            return -1;
+        }
+    }
+    return occ->second[1] - (occ->second[1] - i) / occ->second[2] * occ->second[2];
 }
 
-int DBFHashTable::pred_short(int i, int k, int id) {
 
+int DBFHashTable::pred_short(int i, int k, int id) {
+    int log2 = highest_bit(k);
+    unordered_map<int, triplet> & occ_map = pos[log2][id];
+    unordered_map<int, triplet>::iterator occ = occ_map.find(i / k);
+    if (occ == occ_map.end() || occ->second[0] > i) {
+        occ = occ_map.find(i / k - 1);
+        if (occ == occ_map.end()) {
+            return -1;
+        }
+    }
+    return occ->second[0] + (i - occ->second[0]) / occ->second[2] * occ->second[2];
 }

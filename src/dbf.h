@@ -10,6 +10,9 @@
 // M.Crochemore "Jewels of Stringology", p.85
 class DBF {
 public:
+    // default constructor
+    DBF();
+
     // Creates a new DBF data structure for given text
     // using Karp-Miller-Rosenberg algorithm
     // it requires O(n log n) time and space
@@ -41,6 +44,9 @@ public:
     virtual int succ_short(int i, int k, int id);
 
 protected:
+
+    virtual void __build_dbf(const char * text, int n);
+
     // fill positions data structure with
     // freshly-generated basic factor ids
     virtual void fill_positions(int k, int ids_count);
@@ -61,6 +67,9 @@ public:
     // type for arithmetic progression:
     // (first, last, diff)
     typedef std::array<int, 3> triplet;
+
+    // default constructor
+    DBFHashTable();
 
     // Creates a new DBF data structure and hash table
     // for constant-time succ and pred queries

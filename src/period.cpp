@@ -105,7 +105,7 @@ int max_borderless_length_dbf(const char * text, int n) {
         return n;
     }
 
-    DBF dbf(text, n);
+    DBFHashTable dbf(text, n);
 
     for (int i = border_buffer[n - 1]; i < n - 1; ++i) {
         for (int j = 0; j < i + 1; ++j) {
