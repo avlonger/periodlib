@@ -190,10 +190,10 @@ void DBFHashTable::fill_positions(int k, int ids_count) {
             unordered_map<int, triplet> & occ_map = pos[k][ids[k][i]];
             unordered_map<int, triplet>::iterator it = occ_map.find(slice_pos);
             if (it == occ_map.end()) {
-                occ_map[slice_pos] = triplet{i, -1, -1};
+                occ_map[slice_pos] = triplet{i, i, 0};
             } else {
                 // save difference of arithmetic progression value
-                if (it->second[2] == -1) {
+                if (it->second[2] == 0) {
                     it->second[2] = i - it->second[0];
                 }
                 it->second[1] = i;
@@ -209,9 +209,12 @@ int DBFHashTable::succ_short(int i, int k, int id) {
     unordered_map<int, triplet>::iterator occ = occ_map.find(i / k);
     if (occ == occ_map.end() || occ->second[1] < i) {
         occ = occ_map.find(i / k + 1);
-        if (occ == occ_map.end()) {
+        if (occ == occ_map.end() || occ->second[0] > i + k) {
             return -1;
         }
+    }
+    if (occ->second[2] == 0) {
+        return occ->second[0];
     }
     return occ->second[1] - (occ->second[1] - i) / occ->second[2] * occ->second[2];
 }
@@ -223,9 +226,12 @@ int DBFHashTable::pred_short(int i, int k, int id) {
     unordered_map<int, triplet>::iterator occ = occ_map.find(i / k);
     if (occ == occ_map.end() || occ->second[0] > i) {
         occ = occ_map.find(i / k - 1);
-        if (occ == occ_map.end()) {
+        if (occ == occ_map.end() || occ->second[1] < i - k) {
             return -1;
         }
+    }
+    if (occ->second[2] == 0) {
+        return occ->second[0];
     }
     return occ->second[0] + (i - occ->second[0]) / occ->second[2] * occ->second[2];
 }

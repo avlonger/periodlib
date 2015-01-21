@@ -33,13 +33,13 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
 
         // first occurrence of right half in left factor
         int first_in_left = dbf.succ_short(start, half, right_half_id);
-        if (first_in_left < 0)
+        if (first_in_left < 0 || first_in_left > start + half)
             // no occurrences
             continue;
 
         // first occurrence of left half in right factor
         int first_in_right = dbf.succ_short(end - k, half, left_half_id);
-        if (first_in_right < 0)
+        if (first_in_right < 0 || first_in_right > end - half)
             // no occurrences
             continue;
 
@@ -48,7 +48,7 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
 
         // last occurrence of right half in left factor
         int last_in_left = first_in_left;
-        if (second_in_left < 0) {
+        if (second_in_left < 0 || second_in_left > start + half) {
             second_in_left = -1;
         } else {
             last_in_left = dbf.pred_short(start + half, half, right_half_id);
@@ -59,7 +59,7 @@ bool is_borderless(const char * text, DBF & dbf, int start, int end) {
 
         // last occurrence of left half in right factor
         int last_in_right = first_in_right;
-        if (second_in_right < 0) {
+        if (second_in_right < 0 || second_in_right > end - half) {
             second_in_right = -1;
         } else {
             last_in_right = dbf.pred_short(end - k, half, left_half_id);
