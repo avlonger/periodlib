@@ -154,9 +154,11 @@ int DBF::pred(int i, int k, int id) {
     vector<int>::iterator result = std::upper_bound(
         pos[log2][id].begin(), pos[log2][id].end(), i
     );
-    if (result == pos[log2][id].end())
+
+    if (result == pos[log2][id].begin()) {
         return -1;
-    return *result;
+    }
+    return *(--result);
 }
 
 
