@@ -7,7 +7,6 @@
 #include <numeric>
 #include <string>
 #include <algorithm>
-#include <Python/Python.h>
 
 #include "etc.h"
 
