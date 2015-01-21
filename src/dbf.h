@@ -33,12 +33,12 @@ public:
     // Returns the last occurrence of
     // basic factor v having given id from range
     // [i - |v|, i]
-    int pred_short(int i, int k, int id);
+    virtual int pred_short(int i, int k, int id);
 
     // Returns the last occurrence of
     // basic factor v having given id from range
     // [i, i + |v|]
-    int succ_short(int i, int k, int id);
+    virtual int succ_short(int i, int k, int id);
 
 protected:
     // fill positions data structure with
@@ -69,12 +69,12 @@ public:
     // Returns the first occurrence of
     // basic factor v having given id from range
     // [i - |v|, i]
-    int pred_short(int i, int k, int id);
+    virtual int pred_short(int i, int k, int id);
 
     // Returns the first occurrence of
     // basic factor v having given id from range
     // [i, i + |v|]
-    int succ_short(int i, int k, int id);
+    virtual int succ_short(int i, int k, int id);
 
 private:
     // fill positions data structure with
@@ -83,6 +83,10 @@ private:
 
     // positions of basic factors
     std::vector< std::vector< std::unordered_map<int, triplet> > > pos;
+
+    // remove long SUCC and PREV queries from derived class
+    using DBF::succ;
+    using DBF::pred;
 
 };
 
