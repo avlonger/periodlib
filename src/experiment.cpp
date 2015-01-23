@@ -38,6 +38,7 @@ void usage(const char * program_name) {
     printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
     printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
     printf("BORDER                      find longest border\n");
+    printf("MAXBORDERLESS_BORDER_FAST   find longest borderless word when building border array\n");
 
     printf("\n");
     printf("Options:\n");
@@ -90,6 +91,10 @@ int longest_borderless_naive() {
 
 int longest_borderless_border() {
     return max_borderless_length_border(CHAR_BUFFER, LENGTH);
+}
+
+int longest_borderless_border_fast() {
+    return max_borderless_length_border_fast(CHAR_BUFFER, LENGTH);
 }
 
 int longest_border() {
@@ -155,6 +160,8 @@ int main(int argc, char** argv) {
         FUNCTION = longest_borderless_naive;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_BORDER") == 0) {
         FUNCTION = longest_borderless_border;
+    } else if (strcmp(argv[optind], "MAXBORDERLESS_BORDER_FAST") == 0) {
+        FUNCTION = longest_borderless_border_fast;
     } else if (strcmp(argv[optind], "BORDER") == 0) {
         FUNCTION = longest_border;
     } else {

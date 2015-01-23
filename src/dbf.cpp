@@ -192,7 +192,7 @@ void DBFHashTable::fill_positions(int k, int ids_count) {
             table_type & occ_map = pos[k][ids[k][i]];
             table_type::iterator it = occ_map.find(slice_pos);
             if (it == occ_map.end()) {
-                occ_map[slice_pos] = triplet{i, i, 0};
+                occ_map[slice_pos] = triplet{{i, i, 0}};
             } else {
                 // save difference of arithmetic progression value
                 if (it->second[2] == 0) {

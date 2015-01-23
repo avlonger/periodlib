@@ -88,7 +88,7 @@ public:
 
 private:
 
-    typedef std::map<int, triplet> table_type;
+    typedef std::unordered_map<int, triplet> table_type;
 
     // fill positions data structure with
     // freshly-generated basic factor ids

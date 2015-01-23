@@ -29,4 +29,7 @@ int max_borderless_length_naive(const char * text, int n = -1);
 // algorithm: test each subword of given word
 int max_borderless_length_super_naive(const char * text, int n = -1);
 
+// Returns longest borderless subword using border arrays
+int max_borderless_length_border_fast(const char * text, int n = -1);
+
 #endif  // PERIOD_UTILITES_H_

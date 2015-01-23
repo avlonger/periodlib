@@ -26,6 +26,7 @@ void usage(const char * program_name) {
     printf("MAXBORDERLESS_SUPER_NAIVE   find longest borderless subword naively\n");
     printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
     printf("                            using border-related heuristics\n");
+    printf("MAXBORDERLESS_BORDER_FAST   find longest borderless word when building border array\n");
     printf("\n");
     printf("Options:\n");
     printf(" -b  Measure time for random words of minimal length\n");
@@ -124,6 +125,8 @@ int main(int argc, char** argv) {
             algorithms[std::string(argv[i])] = max_borderless_length_naive;
         } else if (strcmp(argv[i], "MAXBORDERLESS_SUPER_NAIVE") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_super_naive;
+        } else if (strcmp(argv[i], "MAXBORDERLESS_BORDER_FAST") == 0) {
+            algorithms[std::string(argv[i])] = max_borderless_length_border_fast;
         } else if (strcmp(argv[i], "MAXBORDERLESS_BORDER") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_border;
         } else {
