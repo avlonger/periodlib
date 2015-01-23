@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "period.h"
+#include "kmp.h"
 
 
 // some buffers
@@ -35,7 +36,8 @@ void usage(const char * program_name) {
     printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
     printf("MAXBORDERLESS_SUPER_NAIVE   find longest borderless subword naively\n");
     printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
-    printf("                            using border-related heuristics\n");
+    printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
+    printf("BORDER                      find longest border\n");
 
     printf("\n");
     printf("Options:\n");
@@ -48,7 +50,6 @@ void usage(const char * program_name) {
     printf(" -c  Print count of processed words\n");
     printf(" -f  Fixed prefix length\n");
     printf(" -p  Prefix decimal representation\n");
-    printf(" -r  Read from file (\\n separated words)");
 }
 
 
@@ -89,6 +90,11 @@ int longest_borderless_naive() {
 
 int longest_borderless_border() {
     return max_borderless_length_border(CHAR_BUFFER, LENGTH);
+}
+
+int longest_border() {
+    border(CHAR_BUFFER, INT_BUFFER, LENGTH);
+    return INT_BUFFER[LENGTH - 1];
 }
 
 int main(int argc, char** argv) {
@@ -149,6 +155,8 @@ int main(int argc, char** argv) {
         FUNCTION = longest_borderless_naive;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_BORDER") == 0) {
         FUNCTION = longest_borderless_border;
+    } else if (strcmp(argv[optind], "BORDER") == 0) {
+        FUNCTION = longest_border;
     } else {
         usage(argv[0]);
         return -1;
