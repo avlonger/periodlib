@@ -154,7 +154,10 @@ int max_borderless_length_border(const char * text, int n) {
 
     int max_len = 1;
 
-    for (int i = 0; i < n && n - i > max_len; ++i) {
+    // for each word of length n
+    // there is at least one maximal borderless subword
+    // which starting at i <= n / 2, so i < n >> 1
+    for (int i = 0; i < n >> 1 && n - i > max_len; ++i) {
 
         border(text + i, border_buffer, n - i);
 
@@ -220,7 +223,10 @@ int max_borderless_length_border_fast(const char * text, int n) {
 
     int max_len = 1;
 
-    for (int k = 0; k < n && n - k > max_len; ++k) {
+    // for each word of length n
+    // there is at least one maximal borderless subword
+    // which starting at k <= n / 2, so k < n >> 1
+    for (int k = 0; k < n >> 1 && n - k > max_len; ++k) {
 
         const char * suffix = text + k;
 
