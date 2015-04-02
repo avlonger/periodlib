@@ -35,4 +35,7 @@ int max_borderless_length_border_fast(const char * text, int n = -1);
 // Returns longest borderless subword using DBF and long cuts
 int max_borderless_length_dbf_long_steps(const char * text, int n = -1);
 
+// Returns longest borderless prefix
+int max_borderless_prefix(const char * text, int n = -1);
+
 #endif  // PERIOD_UTILITES_H_

@@ -368,3 +368,33 @@ int max_borderless_length_border_fast(const char * text, int n) {
     free(border_buffer);
     return max_len;
 }
+
+
+int max_borderless_prefix(const char * text, int n) {
+    if (n < 0) {
+        n = (int) strlen(text);
+    }
+    int * border_buffer = (int *) calloc(n, sizeof(int));
+
+    int max_len = 1;
+
+    border_buffer[0] = 0;
+    int j = 0;
+    for (int i = 1; i < n; ++i) {
+
+        j = border_buffer[i - 1];
+
+        while (j > 0 && text[i] != text[j])
+            j = border_buffer[j - 1];
+
+        if (text[i] == text[j])
+            j++;
+
+        border_buffer[i] = j;
+
+        if (j == 0)
+            max_len = i + 1;
+    }
+    free(border_buffer);
+    return max_len;
+}

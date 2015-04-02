@@ -40,6 +40,7 @@ void usage(const char * program_name) {
     printf("BORDER                       find longest border\n");
     printf("MAXBORDERLESS_BORDER_FAST    find longest borderless word when building border array\n");
     printf("MAXBORDERLESS_DBF_LONG_STEPS find longest borderless word using dbf and long cuts\n");
+    printf("MAXBORDERLESS_PREFIX         find longest borderless prefix\n");
 
     printf("\n");
     printf("Options:\n");
@@ -100,6 +101,10 @@ int longest_borderless_border_fast() {
 
 int longest_borderless_dbf_long_steps() {
     return max_borderless_length_dbf_long_steps(CHAR_BUFFER, LENGTH);
+}
+
+int longest_borderless_prefix() {
+    return max_borderless_prefix(CHAR_BUFFER, LENGTH);
 }
 
 int longest_border() {
@@ -169,6 +174,8 @@ int main(int argc, char** argv) {
         FUNCTION = longest_borderless_border_fast;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_DBF_LONG_STEPS") == 0) {
         FUNCTION = longest_borderless_dbf_long_steps;
+    } else if (strcmp(argv[optind], "MAXBORDERLESS_PREFIX") == 0) {
+        FUNCTION = longest_borderless_prefix;
     } else if (strcmp(argv[optind], "BORDER") == 0) {
         FUNCTION = longest_border;
     } else {

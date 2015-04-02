@@ -61,7 +61,7 @@ protected:
 };
 
 // Dictionary of Basic Factors
-// and basic factor occurrences hash table
+// using hash table for factors positions storing
 class DBFHashTable : public DBF{
 public:
 
