@@ -24,9 +24,7 @@ void usage(const char * program_name) {
     printf("                            using dictionary of basic factors and hashtable\n");
     printf("MAXBORDERLESS_NAIVE         find longest borderless subword naively\n");
     printf("MAXBORDERLESS_SUPER_NAIVE   find longest borderless subword naively\n");
-    printf("MAXBORDERLESS_BORDER        find longest borderless subword\n");
-    printf("                            using border-related heuristics\n");
-    printf("MAXBORDERLESS_BORDER_FAST   find longest borderless word when building border array\n");
+    printf("MAXBORDERLESS_BORDER        find longest borderless word when building border array\n");
     printf("MAXBORDERLESS_DBF_LONG_STEPS find longest borderless word using dbf and long cuts\n");
     printf("\n");
     printf("Options:\n");
@@ -126,10 +124,8 @@ int main(int argc, char** argv) {
             algorithms[std::string(argv[i])] = max_borderless_length_naive;
         } else if (strcmp(argv[i], "MAXBORDERLESS_SUPER_NAIVE") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_super_naive;
-        } else if (strcmp(argv[i], "MAXBORDERLESS_BORDER_FAST") == 0) {
-            algorithms[std::string(argv[i])] = max_borderless_length_border_fast;
         } else if (strcmp(argv[i], "MAXBORDERLESS_BORDER") == 0) {
-            algorithms[std::string(argv[i])] = max_borderless_length_border;
+            algorithms[std::string(argv[i])] = max_borderless_length;
         } else if (strcmp(argv[optind], "MAXBORDERLESS_DBF_LONG_STEPS") == 0) {
             algorithms[std::string(argv[i])] = max_borderless_length_dbf_long_steps;
         } else {

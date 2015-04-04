@@ -36,7 +36,6 @@ void usage(const char * program_name) {
     printf("MAXBORDERLESS_NAIVE          find longest borderless subword naively\n");
     printf("MAXBORDERLESS_SUPER_NAIVE    find longest borderless subword naively\n");
     printf("MAXBORDERLESS_BORDER         find longest borderless subword\n");
-    printf("MAXBORDERLESS_BORDER         find longest borderless subword\n");
     printf("BORDER                       find longest border\n");
     printf("MAXBORDERLESS_BORDER_FAST    find longest borderless word when building border array\n");
     printf("MAXBORDERLESS_DBF_LONG_STEPS find longest borderless word using dbf and long cuts\n");
@@ -91,12 +90,8 @@ int longest_borderless_naive() {
     return max_borderless_length_naive(CHAR_BUFFER, LENGTH);
 }
 
-int longest_borderless_border() {
-    return max_borderless_length_border(CHAR_BUFFER, LENGTH);
-}
-
-int longest_borderless_border_fast() {
-    return max_borderless_length_border_fast(CHAR_BUFFER, LENGTH);
+int longest_borderless() {
+    return max_borderless_length(CHAR_BUFFER, LENGTH);
 }
 
 int longest_borderless_dbf_long_steps() {
@@ -169,9 +164,7 @@ int main(int argc, char** argv) {
     } else if (strcmp(argv[optind], "MAXBORDERLESS_NAIVE") == 0) {
         FUNCTION = longest_borderless_naive;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_BORDER") == 0) {
-        FUNCTION = longest_borderless_border;
-    } else if (strcmp(argv[optind], "MAXBORDERLESS_BORDER_FAST") == 0) {
-        FUNCTION = longest_borderless_border_fast;
+        FUNCTION = longest_borderless;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_DBF_LONG_STEPS") == 0) {
         FUNCTION = longest_borderless_dbf_long_steps;
     } else if (strcmp(argv[optind], "MAXBORDERLESS_PREFIX") == 0) {

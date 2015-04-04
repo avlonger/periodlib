@@ -334,30 +334,33 @@ int max_borderless_length_super_naive(const char * text, int n) {
 }
 
 
-int max_borderless_length_border_fast(const char * text, int n) {
+int max_borderless_length(const char * text, int n) {
+
     if (n < 0) {
         n = (int) strlen(text);
     }
+
     int * border_buffer = (int *) calloc(n, sizeof(int));
 
     int max_len = 1;
 
-    // for each word of length n
-    // there is at least one maximal borderless subword
-    // which starting at k <= n / 2, so k < n >> 1
-    for (int k = 0; k < n >> 1 && n - k > max_len; ++k) {
+    for (int k = 0; k < n && n - k > max_len; ++k) {
 
         const char * suffix = text + k;
 
         border_buffer[0] = 0;
         int j = 0;
         for (int i = 1; i < n - k; ++i) {
+
             j = border_buffer[i - 1];
+
             while (j > 0 && suffix[i] != suffix[j]) {
                 j = border_buffer[j - 1];
             }
+
             if (suffix[i] == suffix[j])
                 j++;
+
             border_buffer[i] = j;
 
             if (j == 0 && i + 1 > max_len) {
