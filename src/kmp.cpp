@@ -22,15 +22,15 @@ int kmp(const char * pattern, const char * text, int * output){
     size_t m = strlen(pattern), n = strlen(text);
     int * pattern_border = (int *) calloc(m, sizeof(int));
     border(pattern, pattern_border, n);
-    int i = 0, j = 0, k = 0;
-    while (j < n) {
+    int i = 0, k = 0;
+    for (int j = 0; j < n; ++j) {
         while (i > 0 && pattern[i] != text[j])
             i = pattern_border[i - 1];
-        i++;
-        j++;
+        if (pattern[i] == text[j])
+            i++;
         if (i >= m) {
-            output[k++] = j - i;
-            i = pattern_border[i];
+            output[k++] = j - i + 1;
+            i = pattern_border[i - 1];
         }
     }
     free(pattern_border);
